@@ -1,0 +1,35 @@
+import logging
+from abc import ABC, abstractmethod
+from sklearn.linear_model import LogisticRegression
+
+class Model(ABC):
+    
+    @abstractmethod
+    def train(self, X_train, y_train):
+        """Trains the model
+
+        Args:
+            X_train (_type_): training data
+            y_train (_type_): training labels
+        """
+        pass
+    
+class LogisticRegressionModel(Model):
+    """Logistic regression model
+    """
+    def train(self, X_train, y_train, **kwargs):
+        """Trains the model
+
+        Args:
+            X_train (_type_): training data
+            y_train (_type_): training labels
+        """
+        try:
+            
+            logisticreg = LogisticRegression(**kwargs) 
+            logisticreg.fit(X_train, y_train)
+            logging.info("Model training completed")
+            return logisticreg
+        except Exception as e:
+            logging.error("Error in cleaning data: {}".format(e))
+            raise e
