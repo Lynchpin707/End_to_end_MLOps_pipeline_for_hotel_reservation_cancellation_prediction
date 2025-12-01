@@ -6,22 +6,19 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 
 class DataStrategy(ABC):
+    """ Abstract class definining strategy for handling data"""
     
     @abstractmethod
     def handle_data(self, data: pd.DataFrame) -> Union[pd.DataFrame, pd.Series]:
         pass
     
 class DataPreProcessStrategy(DataStrategy):
-    """_summary_
-
-    Args:
-        DataStrategy (_type_): ABC 
-    """
+    """ Data preprocessing strategy which preprocesses the data. """
     def handle_data(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Transforms categorical data into numerical data and elects only the relevant features
+        """Transforms categorical data into numerical data and selects only the relevant features
 
         Args:
-            df (pd.DataFrame): The initial df
+            data (pd.DataFrame): The initial df
 
         Raises:
             e: error occured during data preprocessing
@@ -34,35 +31,37 @@ class DataPreProcessStrategy(DataStrategy):
             
             data['room_type_reserved'] = data['room_type_reserved'].map({'Room_Type 1':1, 'Room_Type 2':2,'Room_Type 3':3,'Room_Type 4':4, 'Room_Type 5':5, 'Room_Type 6':6, 'Room_Type 7':7})
             
-            data = pd.get_dummies(df, columns=['market_segment_type'], drop_first=False, dtype=int)
+            data = pd.get_dummies(data, columns=['market_segment_type'], drop_first=False, dtype=int)
             
             data["booking_status"] = data["booking_status"].map({"Not_Canceled":0, "Canceled":1})
             
             data = data.drop(columns=['market_segment_type_Aviation', 'arrival_month', 'arrival_date'])
-            return df
+            
+            return data
         except Exception as e:
-            logging.error("Error occured during data preprocessing: {}".format(e))
+            logging.error(f"Error occured during data preprocessing: {e}")
             raise e
 
         
 class DataDevideStrategy(DataStrategy):
+    """ Devides data into train and test sets."""
     def handle_data(self, data:pd.DataFrame) -> Union[pd.DataFrame, pd.Series]:
         try:
             y = data['booking_status']
-            X = data.loc[:, data.columns != 'booking_status']
+            xvalues = data.drop('booking_status', axis=1)
 
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+            X_train, X_test, y_train, y_test = train_test_split(xvalues, y, test_size=0.3, random_state=42)
             return X_train, X_test, y_train, y_test
         except Exception as e:
-            logging.error("Error occured while dividing data: {}".format(e))
+            logging.error(f"Error occured while dividing data: {e}")
             raise e
     
-class DataCleaning:
+class DataCleaning(DataStrategy):
     """
-        Data cleaning class
+        Data cleaning class which preprocesses the data and divides it into train and test data.
     """
     def __init__(self, data:pd.DataFrame, strategy: DataStrategy):
-        self.data = data
+        self.df = data
         self.strategy = strategy
     
     def handle_data(self) -> Union[pd.DataFrame, pd.Series]:
@@ -73,8 +72,8 @@ class DataCleaning:
             Union[pd.DataFrame, pd.Series]: _description_
         """
         try:
-            return self.strategy.handle_data(self.data)
+            return self.strategy.handle_data(self.df)
         except Exception as e:
             logging.error(f"Error in handling data: {e}")
-            raise(e)
+            raise e
         

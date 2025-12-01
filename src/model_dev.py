@@ -31,5 +31,5 @@ class LogisticRegressionModel(Model):
             logging.info("Model training completed")
             return logisticreg
         except Exception as e:
-            logging.error("Error in cleaning data: {}".format(e))
+            logging.error("Error occured while training the model: {}".format(e))
             raise e
