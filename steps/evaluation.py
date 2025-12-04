@@ -18,7 +18,7 @@ experiment_tracker = Client().active_stack.experiment_tracker
 def evaluate_model(
     model: LogisticRegression,
     X_test: pd.DataFrame,
-    y_test: pd.DataFrame
+    y_test: pd.Series
     ) -> Tuple[
         Annotated[float, "accuracy"],
         Annotated[float, "f1 score"]
@@ -28,7 +28,7 @@ def evaluate_model(
     Args:
         model (RegressorMixin): the trained model
         X_test (pd.DataFrame): the test data
-        y_test (pd.DataFrame): labels of the test data
+        y_test (pd.Series): labels of the test data
 
     Raises:
         e: error while calculating the metrics
