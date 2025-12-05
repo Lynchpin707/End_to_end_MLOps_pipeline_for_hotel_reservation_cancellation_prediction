@@ -7,6 +7,7 @@ While building this project, my main focus was not the model itself, but all the
 ## Tech stack
 - **Python** for core development and in association with :
     - **ZenML** as the orchestration backbone of the project.
+    - **MLflow** to insure the traceability of the model's evolution, it's our experiment tracker.
     - **Pandas** and **NumPy** for data manipulation and numerical processing.
     - **Scikit-learn** for model development and evaluation.
     - **Streamlit** to build the interactive web app.
@@ -37,9 +38,12 @@ Our workflow is split into simple, independent and swappable components (or step
 
 **4) Model Evaluation :** Evaluation strategy that allows easy extension and use of multiple metrics (Accuracy, precision, recall, F1-score.)
 
+**4) Model Deployment :** If the model evaluation is successful (meets criterias we previously set)
+
 <p align="center">
     <img src="docs/cont_pipeline.png" alt="The pipeline architecture on ZenML" width="800"/>
 </p>
+
 The pipeline is orchestrated by ZenML, ensuring orderly execution, caching, reproducibility, and clean deployment paths. Also, every step handles its own validation and logging.
 
 ## How to run :
