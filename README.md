@@ -9,6 +9,7 @@ While building this project, my main focus was not the model itself, but all the
     - **ZenML** as the orchestration backbone of the project.
     - **Pandas** and **NumPy** for data manipulation and numerical processing.
     - **Scikit-learn** for model development and evaluation.
+    - **Streamlit** to build the interactive web app.
 - **Git** for rigorous version control.
 
 ## Project objectives   
@@ -36,8 +37,9 @@ Our workflow is split into simple, independent and swappable components (or step
 
 **4) Model Evaluation :** Evaluation strategy that allows easy extension and use of multiple metrics (Accuracy, precision, recall, F1-score.)
 
-<img src="docs/ZenML pipeline.png" alt="The pipeline architecture on ZenML" width="800"/>
-
+<p align="center">
+    <img src="docs/cont_pipeline.png" alt="The pipeline architecture on ZenML" width="800"/>
+</p>
 The pipeline is orchestrated by ZenML, ensuring orderly execution, caching, reproducibility, and clean deployment paths. Also, every step handles its own validation and logging.
 
 ## How to run :
@@ -59,7 +61,16 @@ Run the ZenML pipeline:
 zenml init
 python run_pipeline.py
 ```
-ZenML will then provide you with a dashboard you can visualise on your local machine.
+ZenML will then provide you with a dashboard through which you can visualise your pipelines on your local machine.
+
+Finally, to test the model via the interactive web app:
+```bash
+streamlit run streamlit_app.py
+```
+<p align="center">
+    <img src="docs/Streamlit.png" alt="The interactive streamlit web app" width="500"/>
+</p>
+
 
 ## Ressources:
 - ["How to write software documentation"](https://www.writethedocs.org/guide/writing/beginners-guide-to-docs/) : An article that helped me figure out how to write good documentation for my engineering projects.
