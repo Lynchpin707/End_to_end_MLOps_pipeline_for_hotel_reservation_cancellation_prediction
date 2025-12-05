@@ -38,7 +38,7 @@ Our workflow is split into simple, independent and swappable components (or step
 
 **4) Model Evaluation :** Evaluation strategy that allows easy extension and use of multiple metrics (Accuracy, precision, recall, F1-score.)
 
-**4) Model Deployment :** If the model evaluation is successful (meets criterias we previously set)
+**5) Model Deployment :** If the model evaluation is successful (meets criterias we previously set)
 
 <p align="center">
     <img src="docs/cont_pipeline.png" alt="The pipeline architecture on ZenML" width="800"/>
